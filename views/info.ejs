@@ -1,0 +1,76 @@
+<% include partials/header %>
+
+  <div class="container">
+    <div class="row results">
+      <% results.forEach(function(result){ %>
+        <h1><%= result.fs_fnm %></h1>
+
+        <h3>Address:</h3>
+        <p>
+          <%= result.fs_fsf +' '+ result.fs_fss %>
+        </p>
+        <p>
+          <%= result.fs_fsc +' '+ result.fs_fspcd %>
+        </p>
+        <p>
+          <%= result.fs_fspc %>
+        </p>
+        <p>
+          <%= result.fs_fsph %>
+        </p>
+        <% }) %>
+    </div>
+
+    <% inspections.forEach(function(inspection){ %>
+      <div class="row results">
+        <% if (inspection.header.isCompliant) { %>
+
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">In Compliance <span class='date'><%= inspection.header.date %></h3></span>
+            </div>
+            <div class="panel-body">
+              <p>This premises was found to be in compliance with the Health Protection and Promotion Act R.S.O. 1990.</p>
+            </div>
+          </div>
+
+          <% } else { %>
+            <div class="panel panel-danger">
+              <div class="panel-heading">
+                <h3 class="panel-title">Not in Compliance<span class='date'><%= inspection.header.date %></span></h3>
+              </div>
+              <div class="panel-body inspection-info">
+                <ul>
+                  <% for (var i = 0; i < inspection.bodies.length; i++)  {%>
+                    <li class='col-sm-12 info'>
+                      <div class="col-sm-3">
+                        <h3><%= inspection.bodies[i].question.complianceText%></h3>
+                      </div>
+                      <div class="col-sm-2">
+                        <h4><%= inspection.bodies[i].question.criticalText%></h4>
+                        <p>
+                          <%= inspection.bodies[i].question.category%>
+                        </p>
+                      </div>
+                      <div class="col-sm-7">
+                        <p>
+                          <%= inspection.bodies[i].question.questionText%>
+                        </p>
+                      </div>
+                    </li>
+
+                    <% } %>
+                </ul>
+              </div>
+            </div>
+            <% } %>
+
+      </div>
+      <% }) %>
+  </div>
+
+  </div>
+
+
+
+  <% include partials/footer %>
